@@ -21,6 +21,7 @@ public class BackwardArrayIt implements Iterator<Integer> {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        return data[0];
+        point++;
+        return data[data.length - point];
     }
 }
