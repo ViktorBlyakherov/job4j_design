@@ -18,9 +18,9 @@ public class MatrixIt implements Iterator<Integer> {
         boolean rsl = false;
         for (int i = row; i < data.length; i++) {
             for (int j = column; j < data[i].length; j++) {
+                rsl = true;
                 row = i;
                 column = j;
-                rsl = true;
                 break;
             }
             if (rsl) {
