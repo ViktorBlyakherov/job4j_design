@@ -38,6 +38,10 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
         modCount++;
     }
 
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
     @Override
     public E get(int index) {
         Objects.checkIndex(index, size);
