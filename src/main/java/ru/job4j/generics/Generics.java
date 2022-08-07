@@ -10,19 +10,27 @@ public class Generics {
         List<Animal> first = new ArrayList<>();
         List<Predator> second = new ArrayList<>();
         List<Tiger> third = new ArrayList<>();
+
         first.add(new Animal());
         second.add(new Predator());
         third.add(new Tiger());
+
         gen.printObject(first);
         gen.printObject(second);
         gen.printObject(third);
         System.out.println();
+/**
+        gen.printBoundedWildCard(first);
+*/
         gen.printBoundedWildCard(second);
         gen.printBoundedWildCard(third);
         System.out.println();
+
         gen.printLowerBoundedWildCard(first);
         gen.printLowerBoundedWildCard(second);
-
+/**
+        gen.printLowerBoundedWildCard(third);
+*/
     }
 
     public void printObject(List<?> list) {
