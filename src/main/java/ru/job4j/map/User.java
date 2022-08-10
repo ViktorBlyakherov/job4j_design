@@ -56,9 +56,13 @@ public class User {
         map.put(user1, new Object());
         map.put(user2, new Object());
 
-        System.out.printf("user1 - hashcode: %s, hash: %s, bucket: %s", hashCode1, hash1, bucket1);
+        System.out.printf("user1 - hashcode: %s, hash: %s, bucket: %s\n", hashCode1, hash1, bucket1);
 
-        System.out.printf("user2 - hashcode: %s, hash: %s, bucket: %s", hashCode2, hash2, bucket2);
+        System.out.printf("user2 - hashcode: %s, hash: %s, bucket: %s\n", hashCode2, hash2, bucket2);
+
+        for (User user : map.keySet()) {
+            System.out.println(user + " " + map.get(user));
+        }
     }
 
     @Override
@@ -76,5 +80,14 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(name, children, birthday);
+    }
+
+    @Override
+    public String toString() {
+        return "User{"
+                + "name='" + name + '\''
+                + ", children=" + children
+                + ", birthday=" + birthday
+                + '}';
     }
 }
