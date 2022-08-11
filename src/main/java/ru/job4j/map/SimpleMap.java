@@ -54,7 +54,15 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public V get(K key) {
         int ind = key == null ? 0 : key.hashCode();
-        return table[indexFor(hash(ind))] == null ? null : table[indexFor(hash(ind))].value;
+        V rsl = null;
+        if (table[indexFor(hash(ind))] != null) {
+            if ((key == null && table[indexFor(hash(ind))].key == null)
+                    || (table[indexFor(hash(ind))].key.hashCode() == key.hashCode()
+                    && table[indexFor(hash(ind))].key.equals(key))) {
+                rsl = table[indexFor(hash(ind))].value;
+            }
+        }
+        return rsl;
     }
 
     @Override
@@ -62,10 +70,14 @@ public class SimpleMap<K, V> implements Map<K, V> {
         boolean rsl = false;
         int ind = key == null ? 0 : key.hashCode();
         if (table[indexFor(hash(ind))] != null) {
-            rsl = true;
-            table[indexFor(hash(ind))] = null;
-            count--;
-            modCount++;
+            if ((key == null && table[indexFor(hash(ind))].key == null)
+                    || (table[indexFor(hash(ind))].key.hashCode() == key.hashCode()
+                    && table[indexFor(hash(ind))].key.equals(key))) {
+                rsl = true;
+                table[indexFor(hash(ind))] = null;
+                count--;
+                modCount++;
+            }
         }
         return rsl;
     }
@@ -82,7 +94,12 @@ public class SimpleMap<K, V> implements Map<K, V> {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                return currentIndex < count;
+
+                while (currentIndex < table.length && table[currentIndex] == null) {
+                    currentIndex++;
+                }
+
+                return currentIndex < table.length;
             }
 
             @Override
@@ -90,17 +107,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                int countInd = 0;
-                for (MapEntry<K, V> map : table) {
-                    if (map != null) {
-                        if (countInd == currentIndex) {
-                            currentIndex++;
-                            return map.key;
-                        }
-                        countInd++;
-                    }
-                }
-                return null;
+                return table[currentIndex++].key;
             }
         };
     }
