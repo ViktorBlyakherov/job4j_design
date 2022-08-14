@@ -2,6 +2,7 @@ package ru.job4j.io;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,11 +12,11 @@ public class LogFilter {
         try (BufferedReader in = new BufferedReader(new FileReader("log.txt"))) {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
                 String[] tempArray = line.split(" ");
-                if (tempArray.length > 2 && tempArray[tempArray.length - 2].equals("404")) {
+                if (tempArray.length > 2 && "404".equals(tempArray[tempArray.length - 2])) {
                     rsl.add(line);
                 }
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return rsl;
