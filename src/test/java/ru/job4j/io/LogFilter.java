@@ -21,10 +21,13 @@ public class LogFilter {
         return rsl;
     }
 
+    public static void save(List<String> log, String file) {
+
+    }
+
     public static void main(String[] args) {
         LogFilter logFilter = new LogFilter();
         List<String> log = logFilter.filter("log.txt");
-        System.out.println(log);
-
+        save(log, "404.txt");
     }
 }
