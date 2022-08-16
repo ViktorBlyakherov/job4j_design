@@ -8,26 +8,21 @@ public class Analizy {
     public void unavailable(String source, String target) {
         try (BufferedReader in = new BufferedReader(new FileReader(source)); PrintWriter out = new PrintWriter(new FileOutputStream(target))) {
             String beginPeriod = "";
-            String endPeriod = "";
             String period = "";
             for (String line = in.readLine(); line != null; line = in.readLine()) {
-                int status = Integer.parseInt(line.substring(0, 3));
+                boolean status = Integer.parseInt(line.substring(0, 3)) == 400
+                        || Integer.parseInt(line.substring(0, 3)) == 400;
                 period = line.substring(4);
-                if (status == 400 || status == 500) {
+                if (status) {
                     if (beginPeriod.isEmpty()) {
                         beginPeriod = period;
                     }
-                } else if (endPeriod.isEmpty() && !beginPeriod.isEmpty()) {
-                    endPeriod = period;
-                    out.println(beginPeriod + ";" + endPeriod + ";");
+                } else if (!beginPeriod.isEmpty()) {
+                    out.println(beginPeriod + ";" + period + ";");
                     beginPeriod = "";
-                    endPeriod = "";
                 }
             }
 
-            if (!beginPeriod.isEmpty() && endPeriod.isEmpty()) {
-                out.println(beginPeriod + ";" + period + ";");
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
