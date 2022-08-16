@@ -36,11 +36,26 @@ class ConfigTest {
     }
 
     @Test
-    void whenHasInvalidPair() {
-        String path = "./data/pair_with_invalid.properties";
+    void whenHasNoKey() {
+        String path = "./data/no_key.properties";
         Config config = new Config(path);
         assertThatThrownBy(config::load)
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @Test
+    void whenHasNoValue() {
+        String path = "./data/no_value.properties";
+        Config config = new Config(path);
+        assertThatThrownBy(config::load)
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void whenHasNoEqual() {
+        String path = "./data/no_equal.properties";
+        Config config = new Config(path);
+        assertThatThrownBy(config::load)
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }

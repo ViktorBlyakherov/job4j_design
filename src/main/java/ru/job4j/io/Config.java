@@ -38,12 +38,11 @@ public class Config {
     public void load() {
         try (BufferedReader in = new BufferedReader(new FileReader(path))) {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
-                if (!line.isEmpty() && !line.isBlank() && line.charAt(0) != '#') {
-                    if (isCorrectLine(line)) {
-                        values.put(getKey(line), getValue(line));
-                    } else {
-                        throw new IllegalArgumentException();
+                if (!line.isBlank() && line.charAt(0) != '#') {
+                    if (!isCorrectLine(line)) {
+                        throw new IllegalArgumentException("Invalid format: " + line);
                     }
+                    values.put(getKey(line), getValue(line));
                 }
             }
         } catch (IOException e) {
