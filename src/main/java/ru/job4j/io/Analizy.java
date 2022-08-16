@@ -10,8 +10,7 @@ public class Analizy {
             String beginPeriod = "";
             String period = "";
             for (String line = in.readLine(); line != null; line = in.readLine()) {
-                boolean status = Integer.parseInt(line.substring(0, 3)) == 400
-                        || Integer.parseInt(line.substring(0, 3)) == 400;
+                boolean status = Integer.parseInt(line.substring(0, 3)) > 300;
                 period = line.substring(4);
                 if (status) {
                     if (beginPeriod.isEmpty()) {
