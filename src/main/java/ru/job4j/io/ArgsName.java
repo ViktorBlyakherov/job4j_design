@@ -14,20 +14,25 @@ public class ArgsName {
         return values.get(key);
     }
 
-    private void parse(String[] args) {
-        if (args.length == 0) {
-            throw new IllegalArgumentException("There are no arguments");
+    private void checkArg(String arg) {
+        if (arg.length() < 4 || !arg.contains("=") || arg.charAt(0) != '-'
+                || arg.startsWith("-=") || arg.length() == arg.indexOf("=") + 1) {
+            throw new IllegalArgumentException(String.format("Invalid argument format %s", arg));
         }
+    }
+
+    private void parse(String[] args) {
         for (String arg : args) {
-            if (arg.length() < 4 || !arg.contains("=") || arg.charAt(0) != '-' || "-=".equals(arg.substring(0, 2))) {
-                throw new IllegalArgumentException(String.format("Invalid argument format %s", arg));
-            }
+            checkArg(arg);
             int ind = arg.indexOf("=");
             values.put(arg.substring(1, ind), arg.substring(ind + 1));
         }
     }
 
     public static ArgsName of(String[] args) {
+        if (args.length == 0) {
+            throw new IllegalArgumentException("There are no arguments");
+        }
         ArgsName names = new ArgsName();
         names.parse(args);
         return names;
