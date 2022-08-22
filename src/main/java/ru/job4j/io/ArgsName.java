@@ -14,6 +14,10 @@ public class ArgsName {
         return values.get(key);
     }
 
+    public int getSize() {
+        return values.size();
+    }
+
     private void checkArg(String arg) {
         if (arg.length() < 4 || !arg.contains("=") || arg.charAt(0) != '-'
                 || arg.startsWith("-=") || arg.length() == arg.indexOf("=") + 1) {
