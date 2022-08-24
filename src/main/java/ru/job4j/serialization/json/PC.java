@@ -18,6 +18,26 @@ public class PC {
         this.info = info;
     }
 
+    public boolean isNotebook() {
+        return isNotebook;
+    }
+
+    public int getMemory() {
+        return memory;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public Complectation getComplectation() {
+        return complectation;
+    }
+
+    public String[] getInfo() {
+        return info;
+    }
+
     @Override
     public String toString() {
         return "PC{"

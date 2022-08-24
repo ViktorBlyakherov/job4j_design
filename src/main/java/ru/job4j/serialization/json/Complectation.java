@@ -10,6 +10,14 @@ public class Complectation {
         this.processor = processor;
     }
 
+    public String getHdd() {
+        return hdd;
+    }
+
+    public String getProcessor() {
+        return processor;
+    }
+
     @Override
     public String toString() {
         return "Complectation{"
