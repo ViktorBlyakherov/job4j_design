@@ -40,7 +40,16 @@ public class Search {
     public static void main(String[] args) throws IOException {
         ArgsName names = ArgsName.of(args);
         checkArgs(names);
-        SearchFiles searcher = new SearchFiles(names.get("t"), names.get("n"));
+        String findTemplate = "";
+
+        if ("name".equals(names.get("t"))) {
+            findTemplate = "glob:" + names.get("n");
+        } else if ("regex".equals(names.get("t"))) {
+            findTemplate = "regex:" + names.get("n");
+        } else if ("mask".equals(names.get("t"))) {
+            findTemplate = "glob:**" + names.get("n") + "*";
+        }
+        SearchFiles searcher = new SearchFiles(findTemplate);
         Files.walkFileTree(Path.of(names.get("d")), searcher);
         saveToFile(searcher.getPaths(), names.get("o"));
     }

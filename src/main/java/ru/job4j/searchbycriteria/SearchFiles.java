@@ -12,11 +12,9 @@ import static java.nio.file.FileVisitResult.CONTINUE;
 public class SearchFiles implements FileVisitor<Path> {
 
     private List<Path> paths = new ArrayList<>();
-    private String typeSearch;
     private String mask;
 
-    public SearchFiles(String typeSearch, String mask) {
-        this.typeSearch = typeSearch;
+    public SearchFiles(String mask) {
         this.mask = mask;
     }
 
@@ -31,23 +29,12 @@ public class SearchFiles implements FileVisitor<Path> {
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-        if ("name".equals(typeSearch)) {
-            if (file.getFileName().toString().equals(mask)) {
-                paths.add(file);
-            }
-        } else if ("regex".equals(typeSearch)) {
-            FileSystem fs = FileSystems.getDefault();
-            PathMatcher pm = fs.getPathMatcher("regex:" + mask);
-            if (pm.matches(file)) {
-                paths.add(file);
-            }
-        } else if ("mask".equals(typeSearch)) {
-            FileSystem fs = FileSystems.getDefault();
-            PathMatcher pm = fs.getPathMatcher("glob:**" + mask + "*");
-            if (pm.matches(file)) {
-                paths.add(file);
-            }
+        FileSystem fs = FileSystems.getDefault();
+        PathMatcher pm = fs.getPathMatcher(mask);
+        if (pm.matches(file)) {
+            paths.add(file);
         }
+
         return CONTINUE;
     }
 
