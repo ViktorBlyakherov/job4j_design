@@ -1,24 +1,17 @@
-CREATE TABLE IF NOT EXISTS public.cars
+CREATE TABLE engines
 (
-    id integer NOT NULL DEFAULT nextval('cars_id_seq'::regclass),
-    name character varying(255) COLLATE pg_catalog."default",
+    id serial primary key,
+    name varchar(255),
+    volume float
+)
+
+CREATE TABLE cars
+(
+    id serial primary key,
+    name varchar(255),
     jeep boolean,
-    engine_id integer,
-    CONSTRAINT cars_pkey PRIMARY KEY (id),
-    CONSTRAINT cars_engine_id_fkey FOREIGN KEY (engine_id)
-        REFERENCES public.engines (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+    engine_id INT REFERENCES engines(id)
 )
-
-CREATE TABLE IF NOT EXISTS public.engines
-(
-    id integer NOT NULL DEFAULT nextval('engines_id_seq'::regclass),
-    name character varying(255) COLLATE pg_catalog."default",
-    volume double precision,
-    CONSTRAINT engines_pkey PRIMARY KEY (id)
-)
-
 
 select * from cars;
 
