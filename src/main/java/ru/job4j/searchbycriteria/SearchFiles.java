@@ -31,7 +31,7 @@ public class SearchFiles implements FileVisitor<Path> {
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
         FileSystem fs = FileSystems.getDefault();
         PathMatcher pm = fs.getPathMatcher(mask);
-        if (pm.matches(file)) {
+        if (pm.matches(file.getFileName())) {
             paths.add(file);
         }
 

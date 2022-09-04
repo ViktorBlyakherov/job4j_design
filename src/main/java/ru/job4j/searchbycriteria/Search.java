@@ -43,7 +43,7 @@ public class Search {
         String findTemplate = "";
 
         if ("name".equals(names.get("t"))) {
-            findTemplate = "glob:" + names.get("n");
+            findTemplate = "regex:" + names.get("n").replaceAll("\\.", "[.]");
         } else if ("regex".equals(names.get("t"))) {
             findTemplate = "regex:" + names.get("n");
         } else if ("mask".equals(names.get("t"))) {
