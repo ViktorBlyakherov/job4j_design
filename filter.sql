@@ -1,14 +1,14 @@
+create table type(
+    id serial primary key,
+    name varchar(255)
+);
+
 create table product(
     id serial primary key,
     name varchar(255),
     type_id INT REFERENCES type(id),
 	expired_date date,
 	price float
-);
-
-create table type(
-    id serial primary key,
-    name varchar(255)
 );
 
 insert into type (name) values ('Молоко'), ('Сыр'), ('Мясо');
@@ -26,18 +26,38 @@ insert into product (name, type_id, expired_date, price) values
 
 select * from product;
 
-select * from product p join type t ON t.id = p.type_id where t.name = 'Сыр';
+select * from product p
+join type t
+ON t.id = p.type_id
+where t.name = 'Сыр';
 
-select * from product p where p.name like '%Мороженое%';
+select * from product p
+where p.name like '%Мороженое%';
 
-select * from product p where p.expired_date < '04-09-2022';
+select * from product p
+where p.expired_date < now();
 
-select p.* from product p Order by p.price desc limit 1;
+select p.* from product p
+where p.price = (Select max(price) from product);
 
-select t.name, count (p.id) from type t join product p on p.type_id = t.id group by t.name;
+select t.name, count (p.id)
+from type t join product p
+on p.type_id = t.id
+group by t.name;
 
-select p.* from product p join type t on p.type_id = t.id where t.name = 'Сыр' or t.name = 'Молоко';
+select p.* from product p
+join type t
+on p.type_id = t.id
+where t.name = 'Сыр' or t.name = 'Молоко';
 
-select t.name from type t JOIN product p on t.id = p.type_id group by t.name having count(p.id) < 10;
+select t.name from type t
+JOIN product p
+on t.id = p.type_id
+group by t.name
+having count(p.id) < 10;
 
-select p.name, p.price, p.expired_date, t.name Тип from product p join type t on p.type_id = t.id;
+select p.name, p.price,
+p.expired_date, t.name Тип
+from product p join type t
+on p.type_id = t.id;
+
