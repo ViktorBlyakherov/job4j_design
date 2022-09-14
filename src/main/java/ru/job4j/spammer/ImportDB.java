@@ -27,7 +27,7 @@ public class ImportDB {
                     if (args.length != 2 || args[0].isEmpty() || args[1].isEmpty()) {
                         throw new IllegalArgumentException("Invalid values");
                     }
-                        users.add(new User(s.split(";")[0], s.split(";")[1]));
+                        users.add(new User(args[0], args[1]));
             });
         }
         return users;
